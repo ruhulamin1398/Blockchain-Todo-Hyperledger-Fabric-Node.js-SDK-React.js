@@ -1,0 +1,34 @@
+ {
+  "name": "hyperledger fabric backend",
+  "engineStrict": true,
+    "author": "Ruhul ",
+  "version": "1.0.0",
+  
+  "license": "ISC",
+  "description": "",
+     "engines": {
+        "node": ">=14.14",
+        "npm": ">=6"
+    },
+    
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+      "lint": "eslint *.js",
+        "pretest": "npm run lint"
+  }, 
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14",
+            "fabric-ca-client": "^2.2.4",
+        "fabric-network": "^2.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+     "eslint": "^7.32.0"
+  }
+}
+
+

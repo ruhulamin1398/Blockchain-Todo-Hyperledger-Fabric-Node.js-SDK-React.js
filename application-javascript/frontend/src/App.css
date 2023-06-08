@@ -1,0 +1,39 @@
+.wrapper {
+  padding-top: 30px;
+}
+
+body h3 {
+  margin-bottom: 25px;
+}
+
+.navbar-brand a {
+  color: #ffffff;
+}
+
+.form-wrapper,
+.table-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.table-wrapper {
+  max-width: 700px;
+}
+
+.edit-link {
+  padding: 7px 10px;
+  font-size: 0.875rem;
+  line-height: normal;
+  border-radius: 0.2rem;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  margin-right: 10px;
+  position: relative;
+  top: 1px;
+}
+
+.edit-link:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
