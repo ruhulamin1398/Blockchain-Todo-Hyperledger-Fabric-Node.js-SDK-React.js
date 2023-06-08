@@ -22,7 +22,7 @@ function App() {
             <Container>
               <Navbar.Brand>
                 <Link to={"/create-student"} className="nav-link">
-                Blockchain-Node-React
+                Blockchain-Node-React App
                 </Link>
               </Navbar.Brand>
 
@@ -35,7 +35,7 @@ function App() {
 
                 <Nav>
                   <Link to={"/student-list"} className="nav-link">
-                    Student Asset
+                    All Asset
                   </Link>
                 </Nav>
               </Nav>

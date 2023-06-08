@@ -81,7 +81,58 @@ async function cllBc() {
 }
 
 
+async function CreateNewAssetBC(reqAsset){
+ 
 
+
+  try {
+    const ccp = buildCCPOrg1();
+
+  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+const wallet = await buildWallet(Wallets, walletPath);
+
+  await enrollAdmin(caClient, wallet, mspOrg1);
+
+  await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+
+  const gateway = new Gateway();
+
+  try {
+    await gateway.connect(ccp, {
+      wallet,
+      identity: org1UserId,
+      discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+    });
+    const network = await gateway.getNetwork(channelName);
+
+  const contract = network.getContract(chaincodeName);
+
+     
+ 
+
+
+   	console.log('\n--> Submit Transaction: CreateAsset, creates new asset with ID, color, owner, size, and appraisedValue arguments');
+			result = await contract.submitTransaction('CreateAsset', reqAsset.ID, reqAsset.Colour, reqAsset.Owner, reqAsset.Size, reqAsset.Value);
+			console.log('*** Result: committed');
+			if (`${result}` !== '') {
+        return {
+          data: `${(result.toString())}`
+       };
+			}
+
+
+
+  } finally {
+    gateway.disconnect();
+  }
+} catch (error) {
+  console.error(`******** FAILED to run the application: ${error}`);
+  process.exit(1);
+}
+
+
+
+}
 
 
 
@@ -89,14 +140,10 @@ async function cllBc() {
 let studentSchema = require("./Models/Student.js");
 
 // CREATE Student
-router.route("/create-student").post((req, res, next) => {
-  studentSchema.create(req.body, (error, data) => {
-    if (error) {
-      return next(error);
-    } else {
-      res.json(json(data.data));
-    }
-  });
+router.route("/create-student").post(async (req, res, next) => {
+
+  CreateNewAssetBC(req.body)
+ console.log(req.body)
 });
 
 // READ Students

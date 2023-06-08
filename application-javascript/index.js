@@ -6,18 +6,6 @@ let bodyParser = require("body-parser");
 // Express Route
 const studentRoute = require("./route");
 
-// Connecting mongoDB Database
-mongoose
-  .connect("mongodb://127.0.0.1:27017/react-and-node")
-  .then((x) => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch((err) => {
-    console.error("Error connecting to mongo", err.reason);
-  });
-
 const app = express();
 app.use(bodyParser.json());
 app.use(
