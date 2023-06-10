@@ -112,7 +112,7 @@ const wallet = await buildWallet(Wallets, walletPath);
 
 
    	console.log('\n--> Submit Transaction: CreateAsset, creates new asset with ID, color, owner, size, and appraisedValue arguments');
-			result = await contract.submitTransaction('CreateAsset', reqAsset.ID, reqAsset.Colour, reqAsset.Owner, reqAsset.Size, reqAsset.Value);
+			result = await contract.submitTransaction('CreateAsset', reqAsset.ID, reqAsset.Colour, reqAsset.Size, reqAsset.Owner, reqAsset.Value);
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
         return {
@@ -135,18 +135,16 @@ const wallet = await buildWallet(Wallets, walletPath);
 }
 
 
+ 
 
-// Student Model
-let studentSchema = require("./Models/Student.js");
-
-// CREATE Student
-router.route("/create-student").post(async (req, res, next) => {
+// CREATE Asset
+router.route("/create-asset").post(async (req, res, next) => {
 
   CreateNewAssetBC(req.body)
  console.log(req.body)
 });
 
-// READ Students
+// READ Assets
 router.route("/").get(async (req, res, next) => {
   console.log('all called.......................................................................')
 
@@ -160,45 +158,45 @@ res.json(newdata)
  
 });
 
-// Get Single Student
-router.route("/edit-student/:id").get((req, res, next) => {
-  studentSchema.findById(req.params.id, (error, data) => {
-    if (error) {
-      return next(error);
-    } else {
-      res.json(data);
-    }
-  });
+// Get Single Asset
+router.route("/edit-asset/:id").get((req, res, next) => {
+  // AssetSchema.findById(req.params.id, (error, data) => {
+  //   if (error) {
+  //     return next(error);
+  //   } else {
+  //     res.json(data);
+  //   }
+  // });
 });
 
-// Update Student
-router.route("/update-student/:id").put((req, res, next) => {
-  studentSchema.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: req.body,
-    },
-    (error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.json(data);
-      }
-    }
-  );
+// Update Asset
+router.route("/update-Asset/:id").put((req, res, next) => {
+  // AssetSchema.findByIdAndUpdate(
+  //   req.params.id,
+  //   {
+  //     $set: req.body,
+  //   },
+  //   (error, data) => {
+  //     if (error) {
+  //       return next(error);
+  //     } else {
+  //       res.json(data);
+  //     }
+  //   }
+  // );
 });
 
-// Delete Student
-router.route("/delete-student/:id").delete((req, res, next) => {
-  studentSchema.findByIdAndRemove(req.params.id, (error, data) => {
-    if (error) {
-      return next(error);
-    } else {
-      res.status(200).json({
-        msg: data,
-      });
-    }
-  });
+// Delete Asset
+router.route("/delete-Asset/:id").delete((req, res, next) => {
+  // AssetSchema.findByIdAndRemove(req.params.id, (error, data) => {
+  //   if (error) {
+  //     return next(error);
+  //   } else {
+  //     res.status(200).json({
+  //       msg: data,
+  //     });
+  //   }
+  // });
 });
 
 module.exports = router;

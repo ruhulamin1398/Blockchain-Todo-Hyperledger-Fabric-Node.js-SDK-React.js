@@ -9,9 +9,9 @@ import "./App.css";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import CreateStudent from "./components/Create-student";
-import EditStudent from "./components/Edit-student";
-import StudentList from "./components/Student-list";
+import CreateAsset from "./components/Create-asset";
+import EditAsset from "./components/Edit-asset";
+import AssetList from "./components/Asset-list";
 
 function App() {
   return (
@@ -21,20 +21,20 @@ function App() {
           <Navbar bg="dark" variant="dark">
             <Container>
               <Navbar.Brand>
-                <Link to={"/create-student"} className="nav-link">
+                <Link to={"/asset-list"} className="nav-link">
                 Blockchain-Node-React App
                 </Link>
               </Navbar.Brand>
 
               <Nav className="justify-content-end">
                 <Nav>
-                  <Link to={"/create-student"} className="nav-link">
+                  <Link to={"/create-asset"} className="nav-link">
                     Create Asset
                   </Link>
                 </Nav>
 
                 <Nav>
-                  <Link to={"/student-list"} className="nav-link">
+                  <Link to={"/asset-list"} className="nav-link">
                     All Asset
                   </Link>
                 </Nav>
@@ -51,22 +51,22 @@ function App() {
                   <Route
                     exact
                     path="/"
-                    component={(props) => <CreateStudent {...props} />}
+                    component={(props) => <CreateAsset {...props} />}
                   />
                   <Route
                     exact
-                    path="/create-student"
-                    component={(props) => <CreateStudent {...props} />}
+                    path="/create-asset"
+                    component={(props) => <CreateAsset {...props} />}
                   />
                   <Route
                     exact
-                    path="/edit-student/:id"
-                    component={(props) => <EditStudent {...props} />}
+                    path="/edit-asset/:id"
+                    component={(props) => <EditAsset {...props} />}
                   />
                   <Route
                     exact
-                    path="/student-list"
-                    component={(props) => <StudentList {...props} />}
+                    path="/asset-list"
+                    component={(props) => <AssetList {...props} />}
                   />
                 </Switch>
               </div>

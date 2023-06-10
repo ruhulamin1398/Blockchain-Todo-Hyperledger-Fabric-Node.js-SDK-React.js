@@ -3,20 +3,20 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-export default class CreateStudent extends Component {
+
+export default class EditAsset extends Component {
 
   constructor(props) {
     super(props)
-
-    // Setting up functions
     this.onChangeID= this.onChangeID.bind(this);
     this.onChangeOwner = this.onChangeOwner.bind(this);
     this.onChangeColour = this.onChangeColour.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this); 
     this.onSubmit = this.onSubmit.bind(this);
+       this.onSubmit = this.onSubmit.bind(this);
 
-    // Setting up state
+    // State
     this.state = {
       ID: '',
       Owner: '',
@@ -25,6 +25,20 @@ export default class CreateStudent extends Component {
       email: '',
       Value: ''
     }
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:4000/Assets/edit-asset/' + this.props.match.params.id)
+      .then(res => {
+        this.setState({
+          name: res.data.name,
+          email: res.data.email,
+          rollno: res.data.rollno
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   onChangeID(e) {
@@ -43,28 +57,35 @@ export default class CreateStudent extends Component {
   onChangeValue(e) {
     this.setState({ Value: e.target.value })
   }
- 
 
   onSubmit(e) {
     e.preventDefault()
 
-    const studentObject = {
+    const AssetObject = {
       ID: this.state.ID,
       Owner: this.state.Owner,
       Colour: this.state.Colour,
       Size: this.state.Size, 
       Value: this.state.Value
     };
-    axios.post('http://localhost:4000/students/create-student', studentObject)
-      .then(res => console.log(res.data));
 
-    this.setState({ ID: '', Owner: '', Colour: '' , Size: '', Value: '' })
+    axios.put('http://localhost:4000/Assets/update-Asset/' + this.props.match.params.id, AssetObject)
+      .then((res) => {
+        console.log(res.data)
+        console.log('Asset successfully updated')
+      }).catch((error) => {
+        console.log(error)
+      })
+
+    // Redirect to Asset List 
+    this.props.history.push('/asset-list')
   }
+
 
   render() {
     return (<div className="form-wrapper">
       <Form onSubmit={this.onSubmit}>
-        <Form.Group controlId="ID">
+      <Form.Group controlId="ID">
           <Form.Label>ID</Form.Label>
           <Form.Control type="text" value={this.state.ID} onChange={this.onChangeID} />
         </Form.Group>
@@ -96,7 +117,7 @@ export default class CreateStudent extends Component {
 
 
         <Button variant="danger" size="lg" block="block" type="submit" className="mt-4">
-          Create Asset
+          Update Asset
         </Button>
       </Form>
     </div>);

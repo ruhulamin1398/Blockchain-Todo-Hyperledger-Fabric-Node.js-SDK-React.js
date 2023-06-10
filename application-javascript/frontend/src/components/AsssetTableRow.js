@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Button from 'react-bootstrap/Button'
 
-export default class StudentTableRow extends Component {
+export default class AsssetTableRow extends Component {
   constructor(props) {
     super(props)
-    this.deleteStudent = this.deleteStudent.bind(this)
+    this.deleteAsset = this.deleteAsset.bind(this)
   }
 
-  deleteStudent() {
+  deleteAsset() {
     axios
       .delete(
-        'http://localhost:4000/students/delete-student/' + this.props.obj._id,
+        'http://localhost:4000/Assets/delete-Asset/' + this.props.obj._id,
       )
       .then((res) => {
-        console.log('Student successfully deleted!')
+        console.log('Asset successfully deleted!')
       })
       .catch((error) => {
         console.log(error)
@@ -33,11 +33,11 @@ export default class StudentTableRow extends Component {
         <td>
           <Link
             className="edit-link" path={"product/:id"}
-            to={'/edit-student/' + this.props.obj._id}
+            to={'/edit-asset/' + this.props.obj.ID}
           >
             Edit
           </Link>
-          <Button onClick={this.deleteStudent} size="sm" variant="danger">
+          <Button onClick={this.deleteAsset} size="sm" variant="danger">
             Delete
           </Button>
         </td>

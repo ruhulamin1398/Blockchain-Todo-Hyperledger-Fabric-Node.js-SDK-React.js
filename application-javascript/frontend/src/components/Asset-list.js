@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import StudentTableRow from './StudentTableRow';
+import StudentTableRow from './AsssetTableRow';
 
 
-export default class StudentList extends Component {
+export default class AssetList extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      students: []
+      Assets: []
     };
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/students/')
+    axios.get('http://localhost:4000/Assets/')
       .then(res => {
         this.setState({
 
-          students:JSON.parse(res.data.data)
+          Assets:JSON.parse(res.data.data)
         });
       })
       .catch((error) => {
@@ -26,11 +26,11 @@ export default class StudentList extends Component {
       })
   }
   ConsoleDAtta(){
-      console.log(this.state.students)
+      console.log(this.state.Assets)
   }
   DataTable() {
     this.ConsoleDAtta();
-    return this.state.students.map((res, i) => {
+    return this.state.Assets.map((res, i) => {
       return <StudentTableRow obj={res} key={i} />;
     });
   }

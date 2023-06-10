@@ -4,7 +4,7 @@ let cors = require("cors");
 let bodyParser = require("body-parser");
 
 // Express Route
-const studentRoute = require("./route");
+const AssetRoute = require("./route");
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,7 +14,7 @@ app.use(
   })
 );
 app.use(cors());
-app.use("/students", studentRoute);
+app.use("/Assets", AssetRoute);
 
 // PORT
 const port = process.env.PORT || 4000;
