@@ -5,22 +5,10 @@ import Button from 'react-bootstrap/Button'
 
 export default class AsssetTableRow extends Component {
   constructor(props) {
-    super(props)
-    this.deleteAsset = this.deleteAsset.bind(this)
+    super(props) 
   }
 
-  deleteAsset() {
-    axios
-      .delete(
-        'http://localhost:4000/Assets/delete-Asset/' + this.props.obj._id,
-      )
-      .then((res) => {
-        console.log('Asset successfully deleted!')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+ 
 
   render() {
     return (
@@ -37,8 +25,8 @@ export default class AsssetTableRow extends Component {
           >
             Edit
           </Link>
-          <Button onClick={this.deleteAsset} size="sm" variant="danger">
-            Delete
+          <Button onClick={this.TransferAsset} size="sm" variant="danger">
+            Transfer
           </Button>
         </td>
       </tr>

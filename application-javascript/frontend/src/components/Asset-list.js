@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
-import StudentTableRow from './AsssetTableRow';
+import AssetTableRow from './AsssetTableRow';
 
 
 export default class AssetList extends Component {
@@ -31,7 +31,7 @@ export default class AssetList extends Component {
   DataTable() {
     this.ConsoleDAtta();
     return this.state.Assets.map((res, i) => {
-      return <StudentTableRow obj={res} key={i} />;
+      return <AssetTableRow obj={res} key={i} />;
     });
   }
 

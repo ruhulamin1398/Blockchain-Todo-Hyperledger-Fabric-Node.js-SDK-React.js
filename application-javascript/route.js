@@ -248,7 +248,6 @@ const wallet = await buildWallet(Wallets, walletPath);
 
 
 
-
  
 
 // CREATE Asset
@@ -296,15 +295,23 @@ router.route("/update-Asset/:id").put( async (req, res, next) => {
   console.log(req.body)
   await UpdateAssetBC(req.body);
       res.status(200).json({
-        msg: 'data',
+        msg: 'Successfylly added ',
       });
 
  
 });
 
 // Delete Asset
-router.route("/delete-Asset/:id").delete((req, res, next) => {
+router.route("/delete-Asset/:id").delete(async (req, res, next) => {
   console.log(req.params.id)
+
+  await DeleteAssetBC(req.params.id);
+  res.status(200).json({
+    msg: 'Successfully Deleted ',
+  });
+
+
+
   // AssetSchema.findByIdAndRemove(req.params.id, (error, data) => {
   //   if (error) {
   //     return next(error);
