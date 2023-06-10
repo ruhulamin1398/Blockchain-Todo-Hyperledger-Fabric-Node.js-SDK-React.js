@@ -47,7 +47,7 @@ export default class AssetList extends Component {
           <tr>
             <th>Id</th>
             <th>Owner</th>
-            <th>Colour</th>
+            <th>Color</th>
             <th>Size</th>
             <th>Value</th>
             <th>Action</th>

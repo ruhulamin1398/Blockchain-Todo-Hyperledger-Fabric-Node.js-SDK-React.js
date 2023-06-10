@@ -10,7 +10,7 @@ export default class EditAsset extends Component {
     super(props)
     this.onChangeID= this.onChangeID.bind(this);
     this.onChangeOwner = this.onChangeOwner.bind(this);
-    this.onChangeColour = this.onChangeColour.bind(this);
+    this.onChangeColor = this.onChangeColor.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this); 
     this.onSubmit = this.onSubmit.bind(this);
@@ -20,7 +20,7 @@ export default class EditAsset extends Component {
     this.state = {
       ID: '',
       Owner: '',
-      Colour: '',
+      Color: '',
       Size: '',
       email: '',
       Value: ''
@@ -30,10 +30,14 @@ export default class EditAsset extends Component {
   componentDidMount() {
     axios.get('http://localhost:4000/Assets/edit-asset/' + this.props.match.params.id)
       .then(res => {
+        console.log(JSON.parse(res.data.data))
+
         this.setState({
-          name: res.data.name,
-          email: res.data.email,
-          rollno: res.data.rollno
+          ID: JSON.parse(res.data.data).ID,
+          Owner: JSON.parse(res.data.data).Owner,
+          Color: JSON.parse(res.data.data).Color,
+          Size: JSON.parse(res.data.data).Size, 
+          Value: JSON.parse(res.data.data).AppraisedValue
         });
       })
       .catch((error) => {
@@ -48,8 +52,8 @@ export default class EditAsset extends Component {
   onChangeOwner(e) {
     this.setState({ Owner: e.target.value })
   }
-  onChangeColour(e) {
-    this.setState({ Colour: e.target.value })
+  onChangeColor(e) {
+    this.setState({ Color: e.target.value })
   }
   onChangeSize(e) {
     this.setState({ Size: e.target.value })
@@ -64,21 +68,23 @@ export default class EditAsset extends Component {
     const AssetObject = {
       ID: this.state.ID,
       Owner: this.state.Owner,
-      Colour: this.state.Colour,
+      Color: this.state.Color,
       Size: this.state.Size, 
       Value: this.state.Value
     };
+    console.log(AssetObject);
 
     axios.put('http://localhost:4000/Assets/update-Asset/' + this.props.match.params.id, AssetObject)
       .then((res) => {
         console.log(res.data)
         console.log('Asset successfully updated')
+        this.props.history.push('/asset-list')
       }).catch((error) => {
         console.log(error)
       })
 
     // Redirect to Asset List 
-    this.props.history.push('/asset-list')
+    // this.props.history.push('/asset-list')
   }
 
 
@@ -87,7 +93,7 @@ export default class EditAsset extends Component {
       <Form onSubmit={this.onSubmit}>
       <Form.Group controlId="ID">
           <Form.Label>ID</Form.Label>
-          <Form.Control type="text" value={this.state.ID} onChange={this.onChangeID} />
+          <Form.Control type="text" value={this.state.ID} disabled/>
         </Form.Group>
 
         <Form.Group controlId="Owner">
@@ -97,9 +103,9 @@ export default class EditAsset extends Component {
 
 
 
-        <Form.Group controlId="Colour">
-          <Form.Label>Colour</Form.Label>
-          <Form.Control type="text" value={this.state.Colour} onChange={this.onChangeColour} />
+        <Form.Group controlId="Color">
+          <Form.Label>Color</Form.Label>
+          <Form.Control type="text" value={this.state.Color} onChange={this.onChangeColor} />
         </Form.Group>
 
 

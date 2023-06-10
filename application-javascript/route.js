@@ -81,10 +81,11 @@ async function cllBc() {
 }
 
 
+
+
+
+
 async function CreateNewAssetBC(reqAsset){
- 
-
-
   try {
     const ccp = buildCCPOrg1();
 
@@ -107,18 +108,63 @@ const wallet = await buildWallet(Wallets, walletPath);
 
   const contract = network.getContract(chaincodeName);
 
-     
- 
-
-
    	console.log('\n--> Submit Transaction: CreateAsset, creates new asset with ID, color, owner, size, and appraisedValue arguments');
-			result = await contract.submitTransaction('CreateAsset', reqAsset.ID, reqAsset.Colour, reqAsset.Size, reqAsset.Owner, reqAsset.Value);
+			result = await contract.submitTransaction('CreateAsset', reqAsset.ID, reqAsset.Color, reqAsset.Size, reqAsset.Owner, reqAsset.Value);
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
         return {
           data: `${(result.toString())}`
        };
 			}
+
+  } finally {
+    gateway.disconnect();
+  }
+} catch (error) {
+  console.error(`******** FAILED to run the application: ${error}`);
+  process.exit(1);
+}
+
+
+}
+
+
+
+
+async function GetAssetDetails(AssetID){
+  try {
+    const ccp = buildCCPOrg1();
+
+  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+const wallet = await buildWallet(Wallets, walletPath);
+
+  await enrollAdmin(caClient, wallet, mspOrg1);
+
+  await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+
+  const gateway = new Gateway();
+
+  try {
+    await gateway.connect(ccp, {
+      wallet,
+      identity: org1UserId,
+      discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+    });
+    const network = await gateway.getNetwork(channelName);
+
+  const contract = network.getContract(chaincodeName);
+
+
+  console.log('\n--> Evaluate Transaction: ReadAsset, function returns ' + AssetID+ '  attributes');
+  result = await contract.evaluateTransaction('ReadAsset', AssetID);
+  
+  return {
+    data: `${(result.toString())}`
+ };
+
+
+
+
 
 
 
@@ -131,8 +177,76 @@ const wallet = await buildWallet(Wallets, walletPath);
 }
 
 
+}
+
+
+
+
+
+
+
+
+
+
+
+async function UpdateAssetBC(AssetDetails){
+  try {
+    const ccp = buildCCPOrg1();
+
+  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+const wallet = await buildWallet(Wallets, walletPath);
+
+  await enrollAdmin(caClient, wallet, mspOrg1);
+
+  await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+
+  const gateway = new Gateway();
+
+  try {
+    await gateway.connect(ccp, {
+      wallet,
+      identity: org1UserId,
+      discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+    });
+    const network = await gateway.getNetwork(channelName);
+
+  const contract = network.getContract(chaincodeName);
+
+ 
+
+      try {
+				// How about we try a transactions where the executing chaincode throws an error
+				// Notice how the submitTransaction will throw an error containing the error thrown by the chaincode
+        console.log('\n--> Submit Transaction: UpdateAsset, UpdateAsset asset with ID, color, owner, size, and appraisedValue arguments');
+        result = await contract.submitTransaction('UpdateAsset', AssetDetails.ID, AssetDetails.Color, AssetDetails.Size, AssetDetails.Owner, AssetDetails.Value);
+          console.log('******** FAILED to return an error');
+			} catch (error) {
+				console.log(`*** Successfully caught the error: \n    ${error}`);
+			}
+
+
+
+
+
+
+			if (`${result}` !== '') {
+        return {
+          data: `${(result.toString())}`
+       };
+			}
+
+  } finally {
+    gateway.disconnect();
+  }
+} catch (error) {
+  console.error(`******** FAILED to run the application: ${error}`);
+  process.exit(1);
+}
+
 
 }
+
+
 
 
  
@@ -158,36 +272,39 @@ res.json(newdata)
  
 });
 
+
+
+
+
+
+
+
+
 // Get Single Asset
-router.route("/edit-asset/:id").get((req, res, next) => {
-  // AssetSchema.findById(req.params.id, (error, data) => {
-  //   if (error) {
-  //     return next(error);
-  //   } else {
-  //     res.json(data);
-  //   }
-  // });
+router.route("/edit-asset/:id").get(async (req, res, next) => {
+  console.log(req.params.id);
+  
+  const newdata = await GetAssetDetails(req.params.id);
+  console.log(newdata);
+res.json(newdata);
+
+ 
 });
 
 // Update Asset
-router.route("/update-Asset/:id").put((req, res, next) => {
-  // AssetSchema.findByIdAndUpdate(
-  //   req.params.id,
-  //   {
-  //     $set: req.body,
-  //   },
-  //   (error, data) => {
-  //     if (error) {
-  //       return next(error);
-  //     } else {
-  //       res.json(data);
-  //     }
-  //   }
-  // );
+router.route("/update-Asset/:id").put( async (req, res, next) => {
+  console.log(req.body)
+  await UpdateAssetBC(req.body);
+      res.status(200).json({
+        msg: 'data',
+      });
+
+ 
 });
 
 // Delete Asset
 router.route("/delete-Asset/:id").delete((req, res, next) => {
+  console.log(req.params.id)
   // AssetSchema.findByIdAndRemove(req.params.id, (error, data) => {
   //   if (error) {
   //     return next(error);

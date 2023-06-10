@@ -11,7 +11,7 @@ export default class CreateAsset extends Component {
     // Setting up functions
     this.onChangeID= this.onChangeID.bind(this);
     this.onChangeOwner = this.onChangeOwner.bind(this);
-    this.onChangeColour = this.onChangeColour.bind(this);
+    this.onChangeColor = this.onChangeColor.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this); 
     this.onSubmit = this.onSubmit.bind(this);
@@ -20,7 +20,7 @@ export default class CreateAsset extends Component {
     this.state = {
       ID: '',
       Owner: '',
-      Colour: '',
+      Color: '',
       Size: '',
       email: '',
       Value: ''
@@ -34,8 +34,8 @@ export default class CreateAsset extends Component {
   onChangeOwner(e) {
     this.setState({ Owner: e.target.value })
   }
-  onChangeColour(e) {
-    this.setState({ Colour: e.target.value })
+  onChangeColor(e) {
+    this.setState({ Color: e.target.value })
   }
   onChangeSize(e) {
     this.setState({ Size: e.target.value })
@@ -51,16 +51,19 @@ export default class CreateAsset extends Component {
     const AssetObject = {
       ID: this.state.ID,
       Owner: this.state.Owner,
-      Colour: this.state.Colour,
+      Color: this.state.Color,
       Size: this.state.Size, 
       Value: this.state.Value
     };
     axios.post('http://localhost:4000/Assets/create-asset', AssetObject)
-      .then(res => console.log(res.data));
+      .then(res => {
+        console.log(res.data)
+        console.log('Asset successfully updated') 
+        // Redirect to Asset List 
+        this.props.history.push('/asset-list')
 
-    this.setState({ ID: '', Owner: '', Colour: '' , Size: '', Value: '' })
-      // Redirect to Asset List 
-      this.props.history.push('/asset-list')
+      });
+
     }
 
   render() {
@@ -78,9 +81,9 @@ export default class CreateAsset extends Component {
 
 
 
-        <Form.Group controlId="Colour">
-          <Form.Label>Colour</Form.Label>
-          <Form.Control type="text" value={this.state.Colour} onChange={this.onChangeColour} />
+        <Form.Group controlId="Color">
+          <Form.Label>Color</Form.Label>
+          <Form.Control type="text" value={this.state.Color} onChange={this.onChangeColor} />
         </Form.Group>
 
 
