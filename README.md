@@ -1,4 +1,4 @@
-# Asset transfer basic sample
+# Asset transfer basic Application
 
 The asset transfer basic sample demonstrates:
 
