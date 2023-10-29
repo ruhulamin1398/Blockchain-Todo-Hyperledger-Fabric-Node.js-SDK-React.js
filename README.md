@@ -1,6 +1,13 @@
 # Asset transfer basic Application
 The Hyperledger Fabric Asset-Transfer-Basic-Application, utilizing Hyperledger Fabric 2.5, deploys a Node.js SDK and React.js. This sample showcases asset operations, including creation, reading, updating, transferring, and deletion. The smart contract facilitates these actions, providing CreateAsset, ReadAsset, UpdateAsset, DeleteAsset, and TransferAsset functions for demonstration purposes, focusing on transaction invocation within a simplified context.
 
+
+
+[![Hyperledger Fabric Application: Asset Transfer Basic Application | Node.js SDK | React.js](https://img.youtube.com/vi/SBEWX54ZLSs/0.jpg)](https://www.youtube.com/watch?v=SBEWX54ZLSs)
+
+
+
+
 ## The asset transfer basic sample demonstrates:
 
 - Connecting a client application to a Fabric blockchain network.
