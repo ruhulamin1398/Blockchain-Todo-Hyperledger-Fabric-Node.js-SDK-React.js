@@ -51,14 +51,8 @@ The Fabric test network is used to deploy and run this sample. Follow these step
 
 1. Deploy one of the smart contract implementations (from the `test-network` folder).
    ```
-   # To deploy the TypeScript chaincode implementation
-   ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-typescript/ -ccl typescript
-
-   # To deploy the Go chaincode implementation
-   ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go/ -ccl go
-
-   # To deploy the Java chaincode implementation
-   ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-java/ -ccl java
+   # To deploy the  chaincode implementation
+   ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript/ -ccl javascript
    ```
 
 1. Run the application (from the `asset-transfer-basic` folder).
